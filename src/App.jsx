@@ -4,10 +4,10 @@ import {
   Route,
   Routes,
   NavLink,
-} from "react-router-dom";
-import { useNavigate } from "react-router-dom"; // Mengimpor useNavigate untuk redirect ke halaman lain
+} from "react-router-dom"; // Mengimpor BrowserRouter, Route, dan NavLink dari react-router-dom
 import Loader from "./components/Loader"; // Loader Component
 import ProtectedRoute from "./components/ProtectedRoute"; // ProtectedRoute Component
+import Logout from "./components/Logout";
 
 // Lazy loading untuk komponen Home dan FakultasList
 const Home = React.lazy(() => import("./components/Home"));
@@ -21,13 +21,6 @@ const Login = React.lazy(() => import("./components/Login"));
 
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem("authToken")); // Ambil token dari localStorage
-  const navigate = useNavigate(); // Menginisialisasi fungsi navigate untuk melakukan redirect setelah login
-
-  const handleLogout = () => {
-    localStorage.removeItem("authToken"); // Hapus token dari localStorage
-    setToken(null); // Update state token
-    navigate("/login"); // Redirect ke halaman login
-  };
 
   return (
     <Router>
@@ -72,20 +65,16 @@ const App = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink className="nav-link" to="/login">
-                  Login
-                </NavLink>
-              </li>
-              {token && ( // Tampilkan Logout jika token ada
-                <li className="nav-item">
-                  <button
-                    className="btn btn-link nav-link"
-                    onClick={handleLogout}
-                  >
+                {token ? ( // Tampilkan Logout jika token ada
+                  <NavLink className="nav-link" to="/logout">
                     Logout
-                  </button>
-                </li>
-              )}
+                  </NavLink>
+                ) : (
+                  <NavLink className="nav-link" to="/login">
+                    Login
+                  </NavLink>
+                )}
+              </li>
             </ul>
           </div>
         </div>
@@ -97,6 +86,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} /> {/* Route ke halaman Home */}
             <Route path="/login" element={<Login />} />
+            <Route path="/logout" element={<Logout />} />
             {/* Route ke halaman Login */}
             {/* Protected routes */}
             <Route
