@@ -27,7 +27,7 @@ export default function Login() {
         
         localStorage.setItem("authToken", token); // Menyimpan token ke localStorage untuk keperluan autentikasi di sesi berikutnya
 
-        // navigate("/fakultas"); // Mengarahkan pengguna ke halaman /fakultas setelah berhasil login
+        navigate("/fakultas"); // Mengarahkan pengguna ke halaman /fakultas setelah berhasil login
         // window.location.href = "/fakultas"; // Mengarahkan pengguna ke halaman /fakultas setelah login berhasil
       })
       .catch((error) => {
