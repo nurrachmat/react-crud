@@ -5,6 +5,7 @@ import {
   Routes,
   NavLink,
 } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Mengimpor useNavigate untuk redirect ke halaman lain
 import Loader from "./components/Loader"; // Loader Component
 import ProtectedRoute from "./components/ProtectedRoute"; // ProtectedRoute Component
 
@@ -20,10 +21,12 @@ const Login = React.lazy(() => import("./components/Login"));
 
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem("authToken")); // Ambil token dari localStorage
+  const navigate = useNavigate(); // Menginisialisasi fungsi navigate untuk melakukan redirect setelah login
 
   const handleLogout = () => {
     localStorage.removeItem("authToken"); // Hapus token dari localStorage
     setToken(null); // Update state token
+    navigate("/login"); // Redirect ke halaman login
   };
 
   return (
@@ -77,10 +80,7 @@ const App = () => {
                 <li className="nav-item">
                   <button
                     className="btn btn-link nav-link"
-                    onClick={() => {
-                      handleLogout(); // Panggil handleLogout saat logout ditekan
-                      window.location.href = "/login"; // Navigasi ke halaman login
-                    }}
+                    onClick={handleLogout}
                   >
                     Logout
                   </button>
