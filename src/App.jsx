@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -6,6 +6,7 @@ import {
   NavLink,
 } from "react-router-dom";
 import Loader from "./components/Loader"; // Loader Component
+import ProtectedRoute from "./components/ProtectedRoute"; // ProtectedRoute Component
 
 // Lazy loading untuk komponen Home dan FakultasList
 const Home = React.lazy(() => import("./components/Home"));
@@ -15,8 +16,16 @@ const FakultasEdit = React.lazy(() => import("./components/Fakultas/Edit"));
 const ProdiList = React.lazy(() => import("./components/Prodi/List"));
 const ProdiCreate = React.lazy(() => import("./components/Prodi/Create"));
 const ProdiEdit = React.lazy(() => import("./components/Prodi/Edit"));
+const Login = React.lazy(() => import("./components/Login"));
 
 const App = () => {
+  const [token, setToken] = useState(localStorage.getItem("authToken")); // Ambil token dari localStorage
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken"); // Hapus token dari localStorage
+    setToken(null); // Update state token
+  };
+
   return (
     <Router>
       <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
@@ -59,6 +68,19 @@ const App = () => {
                   Program Studi
                 </NavLink>
               </li>
+              {token && ( // Tampilkan Logout jika token ada
+                <li className="nav-item">
+                  <button
+                    className="btn btn-link nav-link"
+                    onClick={() => {
+                      handleLogout(); // Panggil handleLogout saat logout ditekan
+                      window.location.href = "/login"; // Navigasi ke halaman login
+                    }}
+                  >
+                    Logout
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
         </div>
@@ -69,12 +91,57 @@ const App = () => {
           {/* Suspense untuk fallback saat loading */}
           <Routes>
             <Route path="/" element={<Home />} /> {/* Route ke halaman Home */}
-            <Route path="/fakultas" element={<FakultasList />} />
-            <Route path="/fakultas/create" element={<FakultasCreate />} />
-            <Route path="/fakultas/edit/:id" element={<FakultasEdit />} />
-            <Route path="/prodi" element={<ProdiList />} />
-            <Route path="/prodi/create" element={<ProdiCreate />} />
-            <Route path="/prodi/edit/:id" element={<ProdiEdit />} />
+            <Route path="/login" element={<Login />} />
+            {/* Route ke halaman Login */}
+            {/* Protected routes */}
+            <Route
+              path="/fakultas"
+              element={
+                <ProtectedRoute>
+                  <FakultasList />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/fakultas/create"
+              element={
+                <ProtectedRoute>
+                  <FakultasCreate />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/fakultas/edit/:id"
+              element={
+                <ProtectedRoute>
+                  <FakultasEdit />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/prodi"
+              element={
+                <ProtectedRoute>
+                  <ProdiList />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/prodi/create"
+              element={
+                <ProtectedRoute>
+                  <ProdiCreate />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/prodi/edit/:id"
+              element={
+                <ProtectedRoute>
+                  <ProdiEdit />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </Suspense>
 

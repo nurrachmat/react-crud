@@ -6,6 +6,7 @@ import Swal from "sweetalert2"; // Import SweetAlert2
 
 export default function List() {
   const [fakultas, setFakultas] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // State untuk mengontrol loading
 
   // Mengambil data fakultas saat komponen dimount
   useEffect(() => {
@@ -13,9 +14,11 @@ export default function List() {
       .get("https://project-apiif-3-b.vercel.app/api/api/fakultas")
       .then((response) => {
         setFakultas(response.data.result); // Simpan data fakultas ke dalam state
+        setIsLoading(false); // Set isLoading menjadi false setelah data berhasil diambil
       })
       .catch((error) => {
         console.error("Error fetching data:", error); // Menangani error
+        setIsLoading(false); // Set isLoading menjadi false meskipun terjadi error
       });
   }, []);
 
@@ -25,7 +28,9 @@ export default function List() {
       title: "Are you sure?",
       text: `You won't be able to revert this! Fakultas: ${nama}`,
       icon: "warning",
-      showCancelButton: true, confirmButtonColor: "#3085d6", cancelButtonColor: "#d33",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -58,30 +63,41 @@ export default function List() {
         Create
       </NavLink>
 
-      <ul className="list-group">
-        {fakultas.map((f) => (
-          <li
-            key={f.id}
-            className="list-group-item d-flex justify-content-between align-items-center"
-          >
-            <span>{f.nama}</span> {/* Menampilkan nama fakultas */}
-            <div className="btn-group" role="group" aria-label="Action buttons">
-              <NavLink
-                to={`/fakultas/edit/${f.id}`}
-                className="btn btn-warning"
+      {/* Tampilkan loader jika data belum selesai dimuat */}
+      {isLoading ? (
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      ) : (
+        <ul className="list-group">
+          {fakultas.map((f) => (
+            <li
+              key={f.id}
+              className="list-group-item d-flex justify-content-between align-items-center"
+            >
+              <span>{f.nama}</span> {/* Menampilkan nama fakultas */}
+              <div
+                className="btn-group"
+                role="group"
+                aria-label="Action buttons"
               >
-                Edit
-              </NavLink>
-              <button
-                onClick={() => handleDelete(f.id, f.nama)}
-                className="btn btn-danger"
-              >
-                Delete
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+                <NavLink
+                  to={`/fakultas/edit/${f.id}`}
+                  className="btn btn-warning"
+                >
+                  Edit
+                </NavLink>
+                <button
+                  onClick={() => handleDelete(f.id, f.nama)}
+                  className="btn btn-danger"
+                >
+                  Delete
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </>
   );
 }
