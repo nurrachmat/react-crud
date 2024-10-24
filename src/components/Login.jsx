@@ -25,8 +25,8 @@ export default function Login() {
         const token = response.data.token; // Mengambil token dari response data API
         localStorage.setItem("authToken", token); // Menyimpan token ke localStorage untuk keperluan autentikasi di sesi berikutnya
 
-        // navigate("/fakultas"); // Mengarahkan pengguna ke halaman /fakultas setelah berhasil login
-        window.location.href = "/fakultas"; // Mengarahkan pengguna ke halaman /fakultas setelah login berhasil
+        navigate("/fakultas"); // Mengarahkan pengguna ke halaman /fakultas setelah berhasil login
+        // window.location.href = "/fakultas"; // Mengarahkan pengguna ke halaman /fakultas setelah login berhasil
       })
       .catch((error) => {
         // Jika request gagal

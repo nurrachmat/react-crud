@@ -73,7 +73,6 @@ const App = () => {
                   Login
                 </NavLink>
               </li>
-
               {token && ( // Tampilkan Logout jika token ada
                 <li className="nav-item">
                   <button
