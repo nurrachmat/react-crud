@@ -29,11 +29,6 @@ export default function CreateFakultas() {
         "https://project-apiif-3-b.vercel.app/api/api/fakultas", // Endpoint API yang dituju
         {
           nama: namaFakultas, // Data yang dikirim berupa objek JSON dengan properti 'nama'
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}` // Menambahkan Bearer token pada header
-          }
         }
       );
 
