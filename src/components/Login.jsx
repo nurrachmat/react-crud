@@ -22,10 +22,12 @@ export default function Login() {
       })
       .then((response) => {
         // Jika request berhasil
-        const token = response.data.token; // Mengambil token dari response data API
+        const token = response.data.data.token; // Mengambil token dari response data API
+        // console.log(response.data.data.token);
+        
         localStorage.setItem("authToken", token); // Menyimpan token ke localStorage untuk keperluan autentikasi di sesi berikutnya
 
-        navigate("/fakultas"); // Mengarahkan pengguna ke halaman /fakultas setelah berhasil login
+        // navigate("/fakultas"); // Mengarahkan pengguna ke halaman /fakultas setelah berhasil login
         // window.location.href = "/fakultas"; // Mengarahkan pengguna ke halaman /fakultas setelah login berhasil
       })
       .catch((error) => {

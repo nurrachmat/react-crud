@@ -20,6 +20,9 @@ importers:
       highcharts-react-official:
         specifier: ^3.2.1
         version: 3.2.1(highcharts@11.4.8)(react@18.3.1)
+      pnpm:
+        specifier: ^9.12.2
+        version: 9.12.2
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -1141,6 +1144,11 @@ packages:
 
   picocolors@1.1.0:
     resolution: {integrity: sha512-TQ92mBOW0l3LeMeyLV6mzy/kWr8lkd/hp3mTg7wYK7zJhuBStmGMBG0BdeDZS/dZx1IukaX6Bk11zcln25o1Aw==}
+
+  pnpm@9.12.2:
+    resolution: {integrity: sha512-InIbOhH4FmGuHsaM4ae4eUJaHKW5kcl1sHSsIgsYfOVscI/l22n0yWLJiUUu7nbIKHf07oD0dM69Ye4TRhtiKA==}
+    engines: {node: '>=18.12'}
+    hasBin: true
 
   possible-typed-array-names@1.0.0:
     resolution: {integrity: sha512-d7Uw+eZoloe0EHDIYoe+bQ5WXnGMOpmiZFTuMWCwpjzzkL2nTjcKiAk4hh8TjnGye2TwWOk3UXucZ+3rbmBa8Q==}
@@ -2535,6 +2543,8 @@ snapshots:
   path-parse@1.0.7: {}
 
   picocolors@1.1.0: {}
+
+  pnpm@9.12.2: {}
 
   possible-typed-array-names@1.0.0: {}
 
