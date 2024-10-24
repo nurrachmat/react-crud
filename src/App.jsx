@@ -85,7 +85,7 @@ const App = () => {
           {/* Suspense untuk fallback saat loading */}
           <Routes>
             <Route path="/" element={<Home />} /> {/* Route ke halaman Home */}
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login setToken={setToken} />} />
             <Route path="/logout" element={<Logout />} />
             {/* Route ke halaman Login */}
             {/* Protected routes */}
