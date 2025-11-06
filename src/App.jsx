@@ -17,6 +17,9 @@ const FakultasEdit = React.lazy(() => import("./components/Fakultas/Edit"));
 const ProdiList = React.lazy(() => import("./components/Prodi/List"));
 const ProdiCreate = React.lazy(() => import("./components/Prodi/Create"));
 const ProdiEdit = React.lazy(() => import("./components/Prodi/Edit"));
+const MahasiswaList = React.lazy(() => import("./components/Mahasiswa/List"));
+const MahasiswaCreate = React.lazy(() => import("./components/Mahasiswa/Create"));
+const MahasiswaEdit = React.lazy(() => import("./components/Mahasiswa/Edit"));
 const Login = React.lazy(() => import("./components/Login"));
 
 const App = () => {
@@ -62,6 +65,16 @@ const App = () => {
                   to="/prodi"
                 >
                   Program Studi
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    `nav-link ${isActive ? "active" : ""}`
+                  }
+                  to="/mahasiswa"
+                >
+                  Mahasiswa
                 </NavLink>
               </li>
               <li>
@@ -134,6 +147,30 @@ const App = () => {
               element={
                 <ProtectedRoute>
                   <ProdiEdit />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/mahasiswa"
+              element={
+                <ProtectedRoute>
+                  <MahasiswaList />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/mahasiswa/create"
+              element={
+                <ProtectedRoute>
+                  <MahasiswaCreate />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/mahasiswa/edit/:id"
+              element={
+                <ProtectedRoute>
+                  <MahasiswaEdit />
                 </ProtectedRoute>
               }
             />
