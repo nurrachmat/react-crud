@@ -86,7 +86,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} /> {/* Route ke halaman Home */}
             <Route path="/login" element={<Login setToken={setToken} />} />
-            <Route path="/logout" element={<Logout />} />
+            <Route path="/logout" element={<Logout setToken={setToken} />} />
             {/* Route ke halaman Login */}
             {/* Protected routes */}
             <Route

@@ -3,7 +3,7 @@ import React, { useState } from "react"; // Mengimpor React dan useState untuk m
 import axios from "axios"; // Mengimpor axios untuk melakukan HTTP request
 import { useNavigate } from "react-router-dom"; // Mengimpor useNavigate untuk redirect ke halaman lain
 
-export default function Login() {
+export default function Login({ setToken }) {
   // Mendeklarasikan komponen fungsional Login
   const [email, setEmail] = useState(""); // Mendefinisikan state 'email' dan fungsi 'setEmail' untuk menyimpan email pengguna
   const [password, setPassword] = useState(""); // Mendefinisikan state 'password' dan fungsi 'setPassword' untuk menyimpan password pengguna
@@ -25,9 +25,11 @@ export default function Login() {
         const token = response.data.data.token; // Mengambil token dari response data API
         // console.log(response.data.data.token);
         
-        localStorage.setItem("authToken", token); // Menyimpan token ke localStorage untuk keperluan autentikasi di sesi berikutnya
+  localStorage.setItem("authToken", token); // Menyimpan token ke localStorage untuk keperluan autentikasi di sesi berikutnya
+  // Update App state so navbar reflects logged-in status immediately
+  if (typeof setToken === "function") setToken(token);
 
-        navigate("/fakultas"); // Mengarahkan pengguna ke halaman /fakultas setelah berhasil login
+  navigate("/fakultas"); // Mengarahkan pengguna ke halaman /fakultas setelah berhasil login
         // window.location.href = "/fakultas"; // Mengarahkan pengguna ke halaman /fakultas setelah login berhasil
       })
       .catch((error) => {
